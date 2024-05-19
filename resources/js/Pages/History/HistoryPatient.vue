@@ -10,7 +10,7 @@ import { es } from 'date-fns/locale';
 
 const form = useForm({});
 const props = defineProps({
-    stories: Array // Cambiado de Object a Array
+    stories: Array, // Cambiado de Object a Array
 });
 
 
@@ -29,7 +29,40 @@ const ver = (id) => {
 };
 
 
+
 const toggleStatus = (storyId) => {
+    const story = props.stories.find(story => story.id === storyId);
+    if (story) {
+        // Solicita al usuario que ingrese su nombre de usuario para confirmar la actualización
+        const userName = window.prompt(`Ingrese su nombre completo para confirmar la actualización:`, "");
+        
+        if (userName && userName.trim() === story.paciente.name) {
+            const newState = story.estado_actual === 'asistida'? 'creada' : 'asistida';
+            axios.put(`/patient/${story.id}`, { estado_actual: newState })
+             .then(() => {
+                        console.log('Estado actualizado con éxito');
+                        window.alert('Estado actualizado con exito');
+                        // Actualiza el estado localmente solo si la operación fue exitosa
+                        story.estado_actual = newState;
+                        // Aquí puedes actualizar el estado de la UI si es necesario
+                        // Por ejemplo, si estás utilizando Vue 3 Composition API:
+                        // this.$emit('update:estadoActual', newState);
+                    })
+             .catch(error => {
+                        console.error('Error al actualizar el estado:', error);
+                        // Revierte el estado del checkbox mostrando un mensaje al usuario
+                        // Nota: Este es un mensaje simulado. Deberías reemplazarlo con la lógica adecuada para tu aplicación.
+                        window.alert('Hubo un error al actualizar el estado. Por favor, inténtalo de nuevo.');
+                    });
+        } else {
+            // Muestra un mensaje de error si el nombre ingresado no coincide
+            window.alert('El estado no se actualizo en la base de datos.');
+        }
+    }
+}
+
+
+/*const toggleStatus = (storyId) => {
     const story = props.stories.find(story => story.id === storyId);
     if (story) {
         const newState = story.estado_actual === 'asistida'? 'creada' : 'asistida';
@@ -43,11 +76,8 @@ const toggleStatus = (storyId) => {
                 console.error('Error al actualizar el estado:', error);
             });
     }
-}
+}*/
 
-/*const update = (id) => {
-    form.put(route('stories.update', id), {
-    });*/
 
 
 

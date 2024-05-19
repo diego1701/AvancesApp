@@ -14,9 +14,6 @@ const props = defineProps({
 });
 
 
-
-
-
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   return format(date, "dd 'de' MMMM 'de' yyyy", { locale: es });

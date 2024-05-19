@@ -60,7 +60,7 @@ const form = useForm({
 
                 <TextInput
                     id="identification"
-                    type="text"
+                    type="number"
                     class="mt-1 block w-full"
                     v-model="form.identification"
                     required
