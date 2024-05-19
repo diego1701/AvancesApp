@@ -35,25 +35,25 @@ const toggleStatus = (storyId) => {
     if (story) {
         // Solicita al usuario que ingrese su nombre de usuario para confirmar la actualización
         const userName = window.prompt(`Ingrese su nombre completo para confirmar la actualización:`, "");
-        
+
         if (userName && userName.trim() === story.paciente.name) {
-            const newState = story.estado_actual === 'asistida'? 'creada' : 'asistida';
+            const newState = story.estado_actual === 'asistida' ? 'creada' : 'asistida';
             axios.put(`/patient/${story.id}`, { estado_actual: newState })
-             .then(() => {
-                        console.log('Estado actualizado con éxito');
-                        window.alert('Estado actualizado con exito');
-                        // Actualiza el estado localmente solo si la operación fue exitosa
-                        story.estado_actual = newState;
-                        // Aquí puedes actualizar el estado de la UI si es necesario
-                        // Por ejemplo, si estás utilizando Vue 3 Composition API:
-                        // this.$emit('update:estadoActual', newState);
-                    })
-             .catch(error => {
-                        console.error('Error al actualizar el estado:', error);
-                        // Revierte el estado del checkbox mostrando un mensaje al usuario
-                        // Nota: Este es un mensaje simulado. Deberías reemplazarlo con la lógica adecuada para tu aplicación.
-                        window.alert('Hubo un error al actualizar el estado. Por favor, inténtalo de nuevo.');
-                    });
+                .then(() => {
+                    console.log('Estado actualizado con éxito');
+                    window.alert('Estado actualizado con exito');
+                    // Actualiza el estado localmente solo si la operación fue exitosa
+                    story.estado_actual = newState;
+                    // Aquí puedes actualizar el estado de la UI si es necesario
+                    // Por ejemplo, si estás utilizando Vue 3 Composition API:
+                    // this.$emit('update:estadoActual', newState);
+                })
+                .catch(error => {
+                    console.error('Error al actualizar el estado:', error);
+                    // Revierte el estado del checkbox mostrando un mensaje al usuario
+                    // Nota: Este es un mensaje simulado. Deberías reemplazarlo con la lógica adecuada para tu aplicación.
+                    window.alert('Hubo un error al actualizar el estado. Por favor, inténtalo de nuevo.');
+                });
         } else {
             // Muestra un mensaje de error si el nombre ingresado no coincide
             window.alert('El estado no se actualizo en la base de datos.');
@@ -94,15 +94,12 @@ const toggleStatus = (storyId) => {
                 <div class="flex-1 container  ml-10  mt-3 bg-white p-5 shadow-md">
                     <div class="flex justify-center mt-3">
                         <div class="w-full max-w-xs">
-                            <button
-                                class="w-full bg-gray-800 text-white font-bold py-2 px-4 rounded flex items-center justify-center"
-                                @click="openCreateModal">
+                            <div
+                                class="w-full bg-gray-100 text-white font-bold py-2 px-4 rounded flex items-center justify-center">
                                 <div class="d-grid mx-auto">
-                                    <button><a :href="route('stories.create')"
-                                            :active="route().current('stories.create')"><i
-                                                class="fa-solid fa-circle-plus"></i> + Nueva historia</a> </button>
+                                    <p class="text-gray-800">Historias del paciente</p>
                                 </div>
-                            </button>
+                            </div>
                         </div>
                     </div>
                     <div class="flex justify-center mt-6">
