@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Story;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -14,23 +13,12 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         
-
-        $permisoNombre = 'patient.index';
-
-        // Verifica si el usuario autenticado tiene el permiso
-        if ($request->user()->hasPermissionTo($permisoNombre)) {
-            $pacienteId = Auth::id();;
-            $stories = Story::where('paciente_id',$pacienteId)->with('paciente','profesional')->get();
-            return Inertia::render('History/History',['stories'=>$stories]);
-        } else {
-            // El usuario no tiene el permiso, redirige o devuelve un mensaje adecuado
-            return redirect()->back()->with('error', 'No tienes permiso para realizar esta acción.');
-        }
-
-
+        $pacienteId = Auth::id();;
+        $stories = Story::where('paciente_id',$pacienteId)->with('paciente','profesional')->get();
+        return Inertia::render('History/HistoryPatient',['stories'=>$stories]);
     }
 
     /**
@@ -52,9 +40,9 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -70,7 +58,11 @@ class PatientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $stories = Story::findOrFail($id);
+        $stories->estado_actual = $request->input('estado_actual');
+        $stories->save();
+
+        return response()->json(['message' => 'Estado actualizado con éxito']);
     }
 
     /**

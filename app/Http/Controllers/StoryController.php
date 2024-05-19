@@ -10,7 +10,9 @@ use Inertia\Inertia;
 
 class StoryController extends Controller
 {
-    /**
+
+
+    /** 
      * Display a listing of the resource.
      */
     public function index()

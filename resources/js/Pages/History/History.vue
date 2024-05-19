@@ -8,7 +8,6 @@ import { useRouter } from 'vue-router';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
-
 const form = useForm({});
 const props = defineProps({
   stories: { type: Object }
@@ -42,7 +41,7 @@ const eliminar = (id, name) => {
   })
 };
 
-const router = useRouter()
+
 
 const ver = (id) => {
   form.get(route('stories.show', id));

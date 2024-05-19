@@ -22,6 +22,7 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -30,14 +31,14 @@ Route::get('/dashboard', function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('stories', StoryController::class);
-    //Route::get('/patient',[PatientController::class,'index'])->name('patient.index');
-    Route::group(['middleware' => ['role:Paciente']], function () {
-        Route::get('/patient', [PatientController::class, 'index'])->name('patient.index');;
-    });
+    Route::resource('stories', StoryController::class)->middleware('\App\Http\Middleware\CheckProfesional');
+    Route::get('/patient',[PatientController::class,'index'])->name('patient.index')->middleware('\App\Http\Middleware\CheckRole');
+    Route::put('/patient/{id}',[PatientController::class,'update'])->name('patient.update')->middleware('\App\Http\Middleware\CheckRole');
+    Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.show');
     
-});
 
+});
 require __DIR__.'/auth.php';
+
 
 
