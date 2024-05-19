@@ -31,11 +31,7 @@ Route::get('/dashboard', function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('stories', StoryController::class);
-    //Route::get('/patient',[PatientController::class,'index'])->name('patient.index');
-    Route::group(['middleware' => ['role:Paciente']], function () {
-        Route::get('/patient', [PatientController::class, 'index'])->name('patient.index');;
-    });
-    
+    Route::get('/patient',[PatientController::class,'index'])->name('patient.index');
 });
 
 require __DIR__.'/auth.php';

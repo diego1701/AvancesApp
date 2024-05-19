@@ -14,23 +14,12 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         
-
-        $permisoNombre = 'patient.index';
-
-        // Verifica si el usuario autenticado tiene el permiso
-        if ($request->user()->hasPermissionTo($permisoNombre)) {
-            $pacienteId = Auth::id();;
-            $stories = Story::where('paciente_id',$pacienteId)->with('paciente','profesional')->get();
-            return Inertia::render('History/History',['stories'=>$stories]);
-        } else {
-            // El usuario no tiene el permiso, redirige o devuelve un mensaje adecuado
-            return redirect()->back()->with('error', 'No tienes permiso para realizar esta acción.');
-        }
-
-
+        $pacienteId = Auth::id();;
+        $stories = Story::where('paciente_id',$pacienteId)->with('paciente','profesional')->get();
+        return Inertia::render('History/History',['stories'=>$stories]);
     }
 
     /**
