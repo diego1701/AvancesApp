@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Story;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -19,7 +18,7 @@ class PatientController extends Controller
         
         $pacienteId = Auth::id();;
         $stories = Story::where('paciente_id',$pacienteId)->with('paciente','profesional')->get();
-        return Inertia::render('History/History',['stories'=>$stories]);
+        return Inertia::render('History/HistoryPatient',['stories'=>$stories]);
     }
 
     /**
@@ -41,9 +40,9 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -59,7 +58,11 @@ class PatientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $stories = Story::findOrFail($id);
+        $stories->estado_actual = $request->input('estado_actual');
+        $stories->save();
+
+        return response()->json(['message' => 'Estado actualizado con éxito']);
     }
 
     /**

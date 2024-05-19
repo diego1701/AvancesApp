@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreStoryRequest;
 use App\Models\Story;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,7 +11,9 @@ use Inertia\Inertia;
 
 class StoryController extends Controller
 {
-    /**
+
+
+    /** 
      * Display a listing of the resource.
      */
     public function index()
@@ -21,18 +24,13 @@ class StoryController extends Controller
     }
 
 
-    public function patient()
-    {
-        $pacienteId = Auth::id();;
-        $stories = Story::where('paciente_id',$pacienteId)->get();
-        return Inertia::render('History/History',['stories'=>$stories]);
-    }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+
+
         $pacientes = User::role('Paciente')->get();
         $profesionales = User::role('Profesional')->get();
         return Inertia::render('History/Store',['pacientes' => $pacientes,'profesionales'=>$profesionales]);
@@ -43,8 +41,13 @@ class StoryController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'paciente_id' => 'required',
+            'informacion_paciente' => 'required',
+            'fecha' => 'required',
+            'consecutivo' => 'required',
+        ]);
        
-
         $stories = new Story($request->input());
         // Asignar el user_id del usuario autenticado
         $stories->estado_actual ='creada';

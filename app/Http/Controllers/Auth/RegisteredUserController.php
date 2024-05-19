@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +21,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        $roles = Role::all();
+        return Inertia::render('Auth/Register',[
+            'roles' => $roles,
+        ]);
     }
 
     /**
@@ -34,18 +38,35 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'identification' => 'required|numeric',
+            'last_name' => 'required|string|max:255',
+            'phone' => 'required',
+            'location' => 'required|string|max:255',
+            'role'=>'required'
+            
+
         ]);
 
         $user = User::create([
+            'identification' => $request->identification,
             'name' => $request->name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'location' => $request->location,
             'password' => Hash::make($request->password),
         ]);
 
+        
         event(new Registered($user));
+        $role = Role::findByName($request->role);
+        $user->assignRole($role);
 
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
+
+
+    
     }
 }

@@ -29,10 +29,10 @@ const form = useForm({
 <template>
     <section>
         <header>
-            <h2 class="text-lg font-medium text-gray-900">Profile Information</h2>
+            <h2 class="text-lg font-medium text-gray-900">Información del usuario</h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
+                Actualiza tu configuracion de usuario.
             </p>
         </header>
 
@@ -60,7 +60,7 @@ const form = useForm({
 
                 <TextInput
                     id="identification"
-                    type="text"
+                    type="number"
                     class="mt-1 block w-full"
                     v-model="form.identification"
                     required

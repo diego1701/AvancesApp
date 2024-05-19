@@ -6,10 +6,20 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
+
+const props = defineProps({
+  roles: Array
+});
+
 const form = useForm({
+    identification: '',
     name: '',
+    last_name: '',
     email: '',
+    phone: '',
+    location: '',
     password: '',
+    role:'',
     password_confirmation: '',
 });
 
@@ -26,6 +36,22 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
+                <InputLabel for="indetification" value="Identificación" />
+
+                <TextInput
+                    id="identification"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="form.identification"
+                    required
+                    autofocus
+                    autocomplete="identification"
+                />
+
+                <InputError class="mt-2" :message="form.errors.identification" />
+            </div>
+
+            <div>
                 <InputLabel for="name" value="Name" />
 
                 <TextInput
@@ -39,6 +65,23 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.name" />
+            </div>
+
+
+            <div>
+                <InputLabel for="last_name" value="Apellido" />
+
+                <TextInput
+                    id="last_name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.last_name"
+                    required
+                    autofocus
+                    autocomplete="last_name"
+                />
+
+                <InputError class="mt-2" :message="form.errors.last_name" />
             </div>
 
             <div class="mt-4">
@@ -55,6 +98,45 @@ const submit = () => {
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
+
+            <div class="mt-4">
+                <InputLabel for="phone" value="Phone" />
+
+                <TextInput
+                    id="phone"
+                    type="number"
+                    class="mt-1 block w-full"
+                    v-model="form.phone"
+                    required
+                    autocomplete="phone"
+                />
+
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="location" value="Location" />
+
+                <TextInput
+                    id="location"
+                    type="text"
+                    class="mt-1 block w-full"
+                    v-model="form.location"
+                    required
+                    autocomplete="location"
+                />
+
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="role" value="Tipo" />
+                <select id="role" v-model="form.role"   class="mt-1 block w-full">
+                <option disabled value="">Seleccione un Rol</option>
+                <option v-for="role in roles" :key="role.id" :value="role.name">{{ role.name }}</option>
+                </select>
+            </div>
+            
 
             <div class="mt-4">
                 <InputLabel for="password" value="Password" />

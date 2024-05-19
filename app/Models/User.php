@@ -10,8 +10,6 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    
-    
     use HasRoles;
     use HasFactory, Notifiable;
 
@@ -26,12 +24,6 @@ class User extends Authenticatable
         {
             return $this->hasMany(Story::class, 'profesional_id');
         }
-    
-    
-
-
-
-
     /**
      * The attributes that are mass assignable.
      *
@@ -75,4 +67,5 @@ class User extends Authenticatable
         return $this->hasMany(Story::class,'paciente_id');
         return $this->hasMany(Story::class,'profesional_id');
     }
+
 }
