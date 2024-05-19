@@ -38,7 +38,7 @@ class CheckRole
 
         // Verificar si el usuario tiene el rol buscado
         if ($role &&!$user->roles->contains($role)) {
-            abort(403); // Forbidden
+            return redirect()->route('nofound.index');
         }
 
         return $next($request);

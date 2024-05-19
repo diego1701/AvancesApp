@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NoFoundController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StoryController;
@@ -35,6 +36,7 @@ Route::get('/dashboard', function () {
     Route::get('/patient',[PatientController::class,'index'])->name('patient.index')->middleware('\App\Http\Middleware\CheckRole');
     Route::put('/patient/{id}',[PatientController::class,'update'])->name('patient.update')->middleware('\App\Http\Middleware\CheckRole');
     Route::get('/stories/{story}', [StoryController::class, 'show'])->name('stories.show');
+    Route::get('/nofound',[NoFoundController::class,'index'])->name('nofound.index');
     
 
 });
