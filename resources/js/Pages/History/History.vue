@@ -49,11 +49,6 @@ const ver = (id) => {
 };
 
 
-const update = (id) => {
-  form.put(route('stories.update', id), {
-  });
-}
-
 
 </script>
 

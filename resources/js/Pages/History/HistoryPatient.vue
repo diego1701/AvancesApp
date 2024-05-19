@@ -3,14 +3,16 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Swal from 'sweetalert2';
 import CollapseMenu from '@/Layouts/CollapseMenu.vue';
 import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 import { Head } from '@inertiajs/vue3';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
 const form = useForm({});
 const props = defineProps({
-    stories: { type: Object }
+    stories: Array // Cambiado de Object a Array
 });
+
 
 
 const formatDate = (dateString) => {
@@ -26,23 +28,22 @@ const ver = (id) => {
 
 };
 
-const handleCheckboxChange = (id, isChecked) => {
-    const estadoActual = isChecked? 'asistida' : 'creada';
-    update(id, estadoActual);
-};
 
-
-
-const update = (id, estadoActual) => {
-    form.put(route('patient.update', id), { estado_actual: estadoActual })
-      .then(() => {
-            // Emitir un evento para notificar que el estado ha sido actualizado
-            emits('update', { id, estado_actual: estadoActual });
-        })
-      .catch((error) => {
-            console.error('Error al actualizar el estado:', error);
-        });
-};
+const toggleStatus = (storyId) => {
+    const story = props.stories.find(story => story.id === storyId);
+    if (story) {
+        const newState = story.estado_actual === 'asistida'? 'creada' : 'asistida';
+        axios.put(`/patient/${story.id}`, { estado_actual: newState })
+          .then(() => {
+                console.log('Estado actualizado con éxito');
+                // Actualiza el estado localmente
+                story.estado_actual = newState;
+            })
+          .catch(error => {
+                console.error('Error al actualizar el estado:', error);
+            });
+    }
+}
 
 /*const update = (id) => {
     form.put(route('stories.update', id), {
@@ -110,8 +111,12 @@ const update = (id, estadoActual) => {
                                             </td>
 
                                             <td class="py-3 px-6 text-left">
-    <input type="checkbox" :checked="story.estado_actual === 'asistida'" @change="handleCheckboxChange(story.id, $event.target.checked)">
-</td>
+                                                <input type="checkbox" name="estado_actual"
+                                                    :checked="story.estado_actual === 'asistida'"
+                                                    @change="toggleStatus(story.id)" />
+                                            </td>
+
+
 
 
                                         </tr>
