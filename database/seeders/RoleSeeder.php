@@ -28,14 +28,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'stories.destroy'])->assignRole($role1);
         
         
-        //Permission::create(['name' => 'stories.index'])->syncRoles([$role1,$role2]);
 
-        /*
-        Permission::create(['name' => 'history.index']);
-        Permission::create(['name' => 'history.create']);
-        Permission::create(['name' => 'history.edit']);
-        Permission::create(['name' => 'history.destroy']);
-        */
 
     }
 }

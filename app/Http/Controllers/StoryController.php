@@ -48,7 +48,6 @@ class StoryController extends Controller
         ]);
        
         $stories = new Story($request->input());
-        // Asignar el user_id del usuario autenticado
         $stories->estado_actual ='creada';
         $stories->consecutivo=1;
         $stories->profesional_id = Auth::id();

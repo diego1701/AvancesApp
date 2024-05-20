@@ -13,13 +13,13 @@ class User extends Authenticatable
     use HasRoles;
     use HasFactory, Notifiable;
 
-        // Historias como paciente
+       
         public function historiasComoPaciente()
         {
             return $this->hasMany(Story::class, 'paciente_id');
         }
     
-        // Historias como profesional
+        
         public function historiasComoProfesional()
         {
             return $this->hasMany(Story::class, 'profesional_id');
