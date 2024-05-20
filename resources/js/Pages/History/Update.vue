@@ -84,25 +84,6 @@ const update = (id) => {
                             </div>
 
 
-                            <div class="w-full md:w-1/2 px-3 mb-6">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    for="estado_actual">
-                                    Estado Actual
-                                </label>
-                                <select v-model="form.estado_actual" id="paciente_id" class="form-select w-full" required>
-                                    <option value="">Seleccione un paciente</option>
-                                    <option value="creada">
-                                        Creada
-                                    </option>
-                                    <option value="asistida">
-                                        Asistida
-                                    </option>
-                                    
-                                </select>
-                                <div v-if="form.errors.estado_actual" class="text-sm text-red-500 mt-1">
-                                    {{ form.errors.estado_actual }}
-                                </div>
-                            </div>
 
                             <div class="w-full md:w-1/2 px-3 mb-6">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
