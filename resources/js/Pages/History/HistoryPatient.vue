@@ -113,6 +113,7 @@ const toggleStatus = (storyId) => {
                                             <th class="py-3 px-6 text-left">Paciente</th>
                                             <th class="py-3 px-6 text-left">Información Paciente</th>
                                             <th class="py-3 px-6 text-left">Fecha</th>
+                                            <th class="py-3 px-6 text-left">Consecutivo</th>
                                             <th class="py-3 px-6 text-left">Ver</th>
                                             <th class="py-3 px-6 text-left">Asistida</th>
                                         </tr>
@@ -129,6 +130,7 @@ const toggleStatus = (storyId) => {
                                             </td>
                                             <td class="py-3 px-6 text-left">{{ story.informacion_paciente }}</td>
                                             <td class="py-3 px-6 text-left">{{ formatDate(story.fecha) }}</td>
+                                            <td class="py-3 px-6 text-left">{{ story.consecutivo }}</td>
                                             <td class="py-3 px-6 text-left">
                                                 <button
                                                     class="bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded"
