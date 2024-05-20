@@ -81,18 +81,6 @@ const save = () => {
                                 </div>
                             </div>
 
-                            <div class="w-full md:w-1/2 px-3 mb-6">
-                                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                                    for="consecutivo">
-                                    Consecutivo
-                                </label>
-                                <input :id="'consecutivo'  " class="form-input w-full" type="number" name="consecutivo"
-                                    v-model="form.consecutivo" placeholder="Consecutivo..." required>
-                                <div v-if="form.errors.consecutivo" class="text-sm text-red-500 mt-1">
-                                    {{ form.errors.consecutivo }}
-                                </div>
-                            </div>
-
 
                             <div class="w-full md:w-1/2 px-3 mb-6">
                                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
